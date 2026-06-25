@@ -11,25 +11,25 @@ import { RouterLink } from "@angular/router";
   styleUrl: './lista-de-categorias.css',
 })
 export class ListaDeCategorias implements OnInit {
-  readonly tituloPagina: string = 'Categorias de Productos';
-  categoriasRegistradas = signal<Categoria[]>([]);
-  private categoriaService = inject(CategoriaService);
+  readonly pageTitle: string = 'Categorias de Productos';
+  registeredCategories = signal<Categoria[]>([]);
+  private categoryService = inject(CategoriaService);
 
   ngOnInit(): void {
-    this.cargarCategorias();
+    this.loadCategories();
   }
 
-  private cargarCategorias(): void {
-    this.categoriaService.obtenerCategorias().subscribe({
-      next: (datosRecibidos) => {
-        this.categoriasRegistradas.set(datosRecibidos);
-        console.log('Categorias cargadas:', datosRecibidos);
+  private loadCategories(): void {
+    this.categoryService.getCategories().subscribe({
+      next: (receivedData) => {
+        this.registeredCategories.set(receivedData);
+        console.log('Categorias cargadas:', receivedData);
       },
       error: (err) => console.error('Error al obtener las categorias', err),
     });
   }
 
-  eliminar(categoria: Categoria): void {
+  deleteCategory(category: Categoria): void {
     Swal.fire({
       title: '¿Estas seguro de eliminar esta categoria?',
       text: "No será posible revertir la eliminación!",
@@ -40,10 +40,10 @@ export class ListaDeCategorias implements OnInit {
       confirmButtonText: 'Sí, eliminalo!',
     }).then((result) => {
       if (result.isConfirmed)
-        this.categoriaService.eliminarCategoria(categoria.idCategoria).subscribe({
+        this.categoryService.deleteCategory(category.idCategoria).subscribe({
           next: () => {
-            this.categoriasRegistradas.set(
-              this.categoriasRegistradas().filter((c) => c.idCategoria !== categoria.idCategoria)
+            this.registeredCategories.set(
+              this.registeredCategories().filter((c) => c.idCategoria !== category.idCategoria)
             );
             Swal.fire({
               title: 'Eliminar Categoria!',
@@ -56,4 +56,3 @@ export class ListaDeCategorias implements OnInit {
     });
   }
 }
-

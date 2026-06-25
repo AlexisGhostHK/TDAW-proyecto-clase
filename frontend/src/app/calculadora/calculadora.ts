@@ -7,29 +7,28 @@ import { Component } from '@angular/core';
   styleUrl: './calculadora.css',
 })
 export class Calculadora {
-  tituloCalculadora : string = "Operaciones Basicas";
-  resultadoOperacion : number = 0;
-  primerNumero : number = 10;
-  segundoNumero : number = 10;
+  calculatorTitle: string = "Operaciones Basicas";
+  operationResult: number = 0;
+  firstNumber: number = 10;
+  secondNumber: number = 10;
 
-  sumar(): void{
-    this.resultadoOperacion = this.primerNumero + this.segundoNumero;
+  sumar(): void {
+    this.operationResult = this.firstNumber + this.secondNumber;
   }
 
-  restar(): void{
-    this.resultadoOperacion = this.primerNumero - this.segundoNumero;
+  restar(): void {
+    this.operationResult = this.firstNumber - this.secondNumber;
   }
 
-  multiplicar(): void{
-    this.resultadoOperacion = this.primerNumero * this.segundoNumero;
+  multiplicar(): void {
+    this.operationResult = this.firstNumber * this.secondNumber;
   }
 
-  dividir(): void{
-    if(this.segundoNumero != 0){
-      this.resultadoOperacion = this.primerNumero / this.segundoNumero;
-    }else{
+  dividir(): void {
+    if (this.secondNumber != 0) {
+      this.operationResult = this.firstNumber / this.secondNumber;
+    } else {
       alert("No se puede dividir entre cero");
     }
   }
-
 }

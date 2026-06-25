@@ -7,41 +7,39 @@ import { Categoria } from '../model/categoria';
   providedIn: 'root',
 })
 export class CategoriaService {
-  private clienteHttp = inject(HttpClient);
-  private readonly urlBaseCategorias = "http://localhost:8080/api/v1/categorias/categoria";
-  private cabecerasHttp = new HttpHeaders({
+  private httpClient = inject(HttpClient);
+  private readonly categoriesBaseUrl = "https://proyecto-angular-clase2.onrender.com/api/v1/categorias/categoria";
+  private httpHeaders = new HttpHeaders({
     'Content-Type':'application/json'
   });
 
-  obtenerCategorias(): Observable<Categoria[]> {
-    return this.clienteHttp.get<Categoria[]>(this.urlBaseCategorias);
+  getCategories(): Observable<Categoria[]> {
+    return this.httpClient.get<Categoria[]>(this.categoriesBaseUrl);
   }
 
-  obtenerCategoriaPorId(id : number):Observable<Categoria>{
-    return this.clienteHttp.get<Categoria>(`${this.urlBaseCategorias}/${id}`)
+  getCategoryById(id: number): Observable<Categoria> {
+    return this.httpClient.get<Categoria>(`${this.categoriesBaseUrl}/${id}`)
   }
 
-  registrarCategoria(categoria : Categoria) : Observable<Categoria>{
-    return this.clienteHttp.post<Categoria>
-    (this.urlBaseCategorias, categoria,
-      {headers: this.cabecerasHttp})
-
-  }
-
-  eliminarCategoria(id : number) : Observable<Categoria>{
-    return this.clienteHttp.delete<Categoria>
-    (`${this.urlBaseCategorias}/${id}`,
-      {headers: this.cabecerasHttp}
-     );
-  }
-
-  actualizarCategoria(categoria : Categoria) : Observable<Categoria>{
-    return this.clienteHttp.put<Categoria>(
-      `${this.urlBaseCategorias}/${categoria.idCategoria}`,
-      categoria,
-      {headers: this.cabecerasHttp}
+  createCategory(category: Categoria): Observable<Categoria> {
+    return this.httpClient.post<Categoria>(
+      this.categoriesBaseUrl, category,
+      { headers: this.httpHeaders }
     );
   }
 
-}
+  deleteCategory(id: number): Observable<Categoria> {
+    return this.httpClient.delete<Categoria>(
+      `${this.categoriesBaseUrl}/${id}`,
+      { headers: this.httpHeaders }
+    );
+  }
 
+  updateCategory(category: Categoria): Observable<Categoria> {
+    return this.httpClient.put<Categoria>(
+      `${this.categoriesBaseUrl}/${category.idCategoria}`,
+      category,
+      { headers: this.httpHeaders }
+    );
+  }
+}

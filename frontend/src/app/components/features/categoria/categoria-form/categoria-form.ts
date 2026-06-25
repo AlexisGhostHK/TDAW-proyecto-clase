@@ -11,62 +11,57 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './categoria-form.html',
   styleUrl: './categoria-form.css',
 })
-export class CategoriaForm implements OnInit{
-  readonly tituloFormulario: string = 'Categorias Form';
-  categoriaActual = signal<Categoria> (new Categoria());
+export class CategoriaForm implements OnInit {
+  readonly formTitle: string = 'Categorias Form';
+  currentCategory = signal<Categoria>(new Categoria());
 
-  idRuta = input<number>();
-  private enrutador = inject(Router);
-  private categoriaService = inject(CategoriaService);
+  routeId = input<number>();
+  private router = inject(Router);
+  private categoryService = inject(CategoriaService);
 
   ngOnInit(): void {
-    this.cargarCategoriaExistente();
+    this.loadExistingCategory();
   }
 
-  private cargarCategoriaExistente(): void {
-    const idCategoria = this.idRuta();
-    if (idCategoria){
-      this.categoriaService.obtenerCategoriaPorId(idCategoria).subscribe(
-        {
-        next: (categoriaLeida) => this.categoriaActual.set(categoriaLeida),
+  private loadExistingCategory(): void {
+    const categoryId = this.routeId();
+    if (categoryId) {
+      this.categoryService.getCategoryById(categoryId).subscribe({
+        next: (loadedCategory) => this.currentCategory.set(loadedCategory),
         error: (err) => console.error('Error al obtener la categoria', err)
-      }
-    );
+      });
     }
   }
 
-
-
-  registrarCategoria():void{
-    this.categoriaService.registrarCategoria(this.categoriaActual()).subscribe({
-      next : (categoriaCreada) => {
-        this.enrutador.navigate(['/listaDeCategoria']);
+  createCategory(): void {
+    this.categoryService.createCategory(this.currentCategory()).subscribe({
+      next: (createdCategory) => {
+        this.router.navigate(['/listaDeCategoria']);
         Swal.fire({
           title: 'Categoria Registrada!',
-          text: `La categoria ${categoriaCreada.nombreCategoria} ha sido registrada con éxito.`,
+          text: `La categoria ${createdCategory.nombreCategoria} ha sido registrada con éxito.`,
           icon: 'success',
         });
-       },
-      error : (err) => {
+      },
+      error: (err) => {
         console.error('Error al registrar la categoria', err);
       }
-    })
+    });
   }
 
-  actualizarCategoria(): void{
-    this.categoriaService.actualizarCategoria(this.categoriaActual()).subscribe({
-      next : () => {
-        this.enrutador.navigate(['/listaDeCategoria']);
+  updateCategory(): void {
+    this.categoryService.updateCategory(this.currentCategory()).subscribe({
+      next: () => {
+        this.router.navigate(['/listaDeCategoria']);
         Swal.fire({
           title: 'Categoria Actualizada!',
-          text: `La categoria ${this.categoriaActual().nombreCategoria} ha sido actualizada con éxito.`,
+          text: `La categoria ${this.currentCategory().nombreCategoria} ha sido actualizada con éxito.`,
           icon: 'success',
         });
-       },
-      error : (err) => {
+      },
+      error: (err) => {
         console.error('Error al actualizar la categoria', err);
       }
-    })
+    });
   }
-
 }

@@ -4,7 +4,7 @@
     <div class="card border-success">
       <div class="card-header text-primary text-center">
         <h2 class="card-title">
-          {{tituloFormulario}}
+          {{formTitle}}
         </h2>
       </div>
       <div class="card-body text-primary">
@@ -18,7 +18,7 @@
               placeholder="Nombre de la categoria"
               class="form-control"
               maxlength="50"
-              [(ngModel)]="categoriaActual().nombreCategoria"
+              [(ngModel)]="currentCategory().nombreCategoria"
               />
           </div>
 
@@ -31,16 +31,16 @@
               placeholder="Descripcion de la categoria"
               class="form-control"
               maxlength="100"
-              [(ngModel)]="categoriaActual().descripcionCategoria"
+              [(ngModel)]="currentCategory().descripcionCategoria"
               />
           </div>
-          @if (categoriaActual().idCategoria != 0){
+          @if (currentCategory().idCategoria != 0){
           <div class="mb-3">
-            <button type="button" (click)="actualizarCategoria()" class="btn btn-outline-success form-control">Actualizar Categoria</button>
+            <button type="button" (click)="updateCategory()" class="btn btn-outline-success form-control">Actualizar Categoria</button>
           </div>
         } @else {
           <div class="mb-3">
-            <button type="button" (click)="registrarCategoria()" class="btn btn-outline-primary form-control">Registrar Categoria</button>
+            <button type="button" (click)="createCategory()" class="btn btn-outline-primary form-control">Registrar Categoria</button>
           </div>
 
         }

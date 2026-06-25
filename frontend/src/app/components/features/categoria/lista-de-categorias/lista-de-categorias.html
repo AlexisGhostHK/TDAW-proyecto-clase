@@ -3,7 +3,7 @@
     <div class="card border-succes text-center">
       <div class="card-header text-primary">
         <h2 class="card-title">
-          {{tituloPagina}}
+          {{pageTitle}}
         </h2>
       </div>
       <div class="card-body text-primary">
@@ -17,19 +17,19 @@
             </tr>
           </thead>
           <tbody>
-            @for (lc of categoriasRegistradas(); track lc.idCategoria) {
+            @for (category of registeredCategories(); track category.idCategoria) {
               <tr>
-                <td>{{lc.idCategoria}}</td>
-                <td>{{lc.nombreCategoria}}</td>
-                <td>{{lc.descripcionCategoria}}</td>
+                <td>{{category.idCategoria}}</td>
+                <td>{{category.nombreCategoria}}</td>
+                <td>{{category.descripcionCategoria}}</td>
                 <td>
                   <button class="btn btn-outline-success"
-                   [routerLink]="['/categoriaForm',lc.idCategoria]">
+                   [routerLink]="['/categoriaForm',category.idCategoria]">
                   Actualizar
                 </button>
                 </td>
                 <td>
-                  <button class="btn btn-outline-danger" (click)="eliminar(lc)" >Eliminar</button>
+                  <button class="btn btn-outline-danger" (click)="deleteCategory(category)" >Eliminar</button>
                 </td>
               </tr>
             }@empty {
