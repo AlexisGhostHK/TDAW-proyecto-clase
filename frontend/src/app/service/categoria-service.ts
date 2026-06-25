@@ -8,7 +8,7 @@ import { Categoria } from '../model/categoria';
 })
 export class CategoriaService {
   private httpClient = inject(HttpClient);
-  private readonly categoriesBaseUrl = "https://proyecto-angular-clase2.onrender.com/api/v1/categorias/categoria";
+  private readonly categoriesBaseUrl = "https://tdaw-proyecto-clase-1ggg.onrender.com/api/v1/categorias/categoria";
   private httpHeaders = new HttpHeaders({
     'Content-Type':'application/json'
   });
